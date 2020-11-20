@@ -1,0 +1,35 @@
+@import "./styles/global.scss";
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	background-color: gray("200");
+}
+
+#app {
+	height: 100%;
+}
+
+.app-content {
+	height: calc(100% - 80px);
+}
+
+#selector {
+	height: 44px;
+}
+
+#selection {
+	height: calc(100% - 44px);
+	overflow: auto;
+}
+
+.custom-control-input-warning .custom-control-input:checked ~ .custom-control-label::before {
+	background: theme-color("warning") linear-gradient(180deg, theme-color-level(warning, -5), theme-color("warning")) repeat-x;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+	background: theme-color("warning") linear-gradient(180deg, theme-color-level(warning, -5), theme-color("warning")) repeat-x;
+}

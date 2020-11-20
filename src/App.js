@@ -1,24 +1,35 @@
 import logo from './logo.svg';
-import './App.css';
+
+import 'bootstrap';
+import "../node_modules/@mdi/font/css/materialdesignicons.min.css";
+import './App.scss';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+import NavBar from './components/frame/NavBar';
+import FrameFooter from './components/frame/FrameFooter';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div id="app">
+		<NavBar></NavBar>
+		<div class="container-fluid app-content">
+		{/*
+			<form id="selector" class="form-inline mt-1 pb-1 border-bottom border-secondary">
+				<label class="mr-2">Feature:</label>
+				
+				<b-form-select v-model="mode" :options="modeOptions"></b-form-select>
+			</form>
+			<router-view id="selection"></router-view>
+		*/}
+		</div>
+		<FrameFooter></FrameFooter>
+	</div>
   );
 }
 
