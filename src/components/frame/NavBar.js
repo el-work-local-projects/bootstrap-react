@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './FrameHeader.module.css';
 import Form from 'react-bootstrap/Form';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import FrameMessageViewer from './FrameMessageViewer';
 
@@ -68,25 +70,41 @@ class NavBar extends React.Component {
 						</li>
 						<li className={`${styles.centered} nav-item`}>
 							<Form inline className="text-light">
-								<span className="mdi mdi-tab-plus" style={{marginRight: '4px'}}></span>
+								<OverlayTrigger placement="bottom" overlay={
+									<Tooltip>New Tab</Tooltip>
+								}>
+									<span className="mdi mdi-tab-plus" style={{marginRight: '4px'}}></span>
+								</OverlayTrigger>
 								<Form.Check type="switch" id="custom-switch" className="custom-control-input-warning"/>
-								<span className="mdi mdi-tab-unselected"></span>
+								<OverlayTrigger placement="bottom" overlay={
+									<Tooltip>Same Tab</Tooltip>
+								}>
+									<span className="mdi mdi-tab-unselected"></span>
+								</OverlayTrigger>
 							</Form>		
 						</li>
 					</ul>
 					<ul className="navbar-nav">
-						<li className="nav-item active">
-							<a className="nav-link pr-0" role="button" onClick={() => this.setState({showMessages: true})}>
-								<span className="mdi mdi-message" style={{'fontSize': '18px'}}></span>
-								<span style={{position: 'relative', left: '-6px', top: '6px'}} 
-										className={`badge ${this.state.messages.length === 0 ? '' : 'badge-' + this.state.messages[0].type}`}>{this.state.messages.length}</span>
-							</a>
-						</li>						
+						<OverlayTrigger placement="bottom" overlay={
+							<Tooltip>Messages</Tooltip>
+						}>
+							<li className="nav-item active">
+								<a className="nav-link pr-0" role="button" onClick={() => this.setState({showMessages: true})}>
+									<span className="mdi mdi-message" style={{'fontSize': '18px'}}></span>
+									<span style={{position: 'relative', left: '-6px', top: '6px'}} 
+											className={`badge ${this.state.messages.length === 0 ? '' : 'badge-' + this.state.messages[0].type}`}>{this.state.messages.length}</span>
+								</a>
+							</li>						
+						</OverlayTrigger>
 						<FrameMessageViewer show={this.state.showMessages} handleClose={this.closeMessages}/>
 						<li className="nav-item active dropdown">
-							<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span className="mdi mdi-help-circle"></span>
-							</a>
+							<OverlayTrigger placement="bottom" overlay={
+								<Tooltip>Help</Tooltip>
+							}>
+								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span className="mdi mdi-help-circle"></span>
+								</a>
+							</OverlayTrigger>
 							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 								<a className="dropdown-item" href="#">CAFE User Guide</a>
 								<a className="dropdown-item" href="#">Application User Guide</a>
