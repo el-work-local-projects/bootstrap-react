@@ -1,27 +1,108 @@
-function FrameMessageViewer() {
-  return (
-    <li class="nav-item active" v-b-tooltip.hover.noninteractive title="Messages">
-		<a class="nav-link pr-0" role="button" v-b-modal.frame-message-modal>
-			<span class="mdi mdi-message" style="font-size: 18px"></span>
-			<span style="position: relative; left: -6px; top: 6px;" 
-					class="badge" :class="messages.length === 0 ? '' : 'badge-' + messages[0].type">{{ messages.length }}</span>
-		</a>
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+
+class FrameMessageViewer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			messages: [
+				{
+					type: 'info',
+					message: 'Test message 1',
+					applications: [
+						'EOS Viewer',
+						'Shift Log'
+					]
+				},
+				{
+					type: 'success',
+					message: 'Test message 2',
+					applications: [
+						'CAFE'
+					]
+				}
+			]
+		};
+	}
 	
-		<b-modal id="frame-message-modal" title="CAFE Messages">
-			<div v-for="(msgs, app) in groupedMessages" :key="app">
-				<h5>{{ app }}</h5>
+	groupMessages() {
+		let grouped = {};
+		for (let msg of this.state.messages) {
+			for (let app of msg.applications) {
+				if (!grouped[app]) {
+					grouped[app] = [];
+				}
+				grouped[app].push(msg);
+			}
+		}
+		return grouped;
+	}
+	
+	deleteMessage(msg) {
+		let messages = this.state.messages;
+		messages.splice(messages.indexOf(msg), 1);
+		this.setState({messages: messages});
+	}
+	
+	undoDismissals() {
+		this.setState({
+			messages: [
+				{
+					type: 'info',
+					message: 'Test message 1',
+					applications: [
+						'EOS Viewer',
+						'Shift Log'
+					]
+				},
+				{
+					type: 'success',
+					message: 'Test message 2',
+					applications: [
+						'CAFE'
+					]
+				}
+			]
+		});
+	}
+	
+	buildAlertContent(msg) {
+		return (
+			<Alert key={msg.message} variant={msg.type} dismissible onClose={(e) => this.deleteMessage(msg, e)}>
+				{msg.message}
+			</Alert>
+		);
+	}
+	
+	render() {
+		const apps = Object.entries(this.groupMessages()).map(([app, msgs]) => (
+			<div key={app}>
+				<h5>{app}</h5>
 				<hr/>
-				<b-alert v-for="msg in msgs" :key="msg.message" :variant="msg.type" show 
-						dismissible @dismissed="deleteMessage(msg)">
-							{{ msg.message }}
-				</b-alert>
+				{
+					msgs.map((msg) => this.buildAlertContent(msg))
+				}
 			</div>
-			<template v-slot:modal-footer>
-				<b-button block @click="undoDismissals">Undo Dismissals</b-button>
-			</template>
-		</b-modal>
-	</li>
-  );
+		));
+		
+		return (
+			<Modal show={this.props.show} onHide={this.props.handleClose}>
+				<Modal.Header closeButton>
+				  <Modal.Title>CAFE Messages</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					{apps}
+				</Modal.Body>
+				<Modal.Footer>
+				  <Button variant="secondary" block onClick={() => this.undoDismissals()}>
+					  Undo Dismissals
+				  </Button>
+				</Modal.Footer>
+			</Modal>
+		  );
+	}
 }
 
 export default FrameMessageViewer;

@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './FrameHeader.module.css';
 import Form from 'react-bootstrap/Form';
 
+import FrameMessageViewer from './FrameMessageViewer';
+
 class NavBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,8 +17,31 @@ class NavBar extends React.Component {
 				'OASIS Administrator',
 				'Shift Log'
 			],
-			samewindow: false
+			messages: [
+				{
+					type: 'info',
+					message: 'Test message 1',
+					applications: [
+						'EOS Viewer',
+						'Shift Log'
+					]
+				},
+				{
+					type: 'success',
+					message: 'Test message 2',
+					applications: [
+						'CAFE'
+					]
+				}
+			],
+			samewindow: false,
+			showMessages: false
 		};
+		this.closeMessages = this.closeMessages.bind(this);
+	}
+	
+	closeMessages() {
+		this.setState({showMessages: false});
 	}
 	
 	render() {
@@ -50,12 +75,16 @@ class NavBar extends React.Component {
 						</li>
 					</ul>
 					<ul className="navbar-nav">
-							{/*
-						<frame-message-viewer></frame-message-viewer>
-						*/}
+						<li className="nav-item active">
+							<a className="nav-link pr-0" role="button" onClick={() => this.setState({showMessages: true})}>
+								<span className="mdi mdi-message" style={{'fontSize': '18px'}}></span>
+								<span style={{position: 'relative', left: '-6px', top: '6px'}} 
+										className={`badge ${this.state.messages.length === 0 ? '' : 'badge-' + this.state.messages[0].type}`}>{this.state.messages.length}</span>
+							</a>
+						</li>						
+						<FrameMessageViewer show={this.state.showMessages} handleClose={this.closeMessages}/>
 						<li className="nav-item active dropdown">
-							<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-									>
+							<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span className="mdi mdi-help-circle"></span>
 							</a>
 							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

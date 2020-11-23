@@ -18,7 +18,7 @@ function App() {
   return (
     <div id="app">
 		<NavBar></NavBar>
-		<div class="container-fluid app-content">
+		<div className="container-fluid app-content">
 		{/*
 			<form id="selector" class="form-inline mt-1 pb-1 border-bottom border-secondary">
 				<label class="mr-2">Feature:</label>

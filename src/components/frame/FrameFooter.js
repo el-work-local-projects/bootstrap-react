@@ -20,7 +20,7 @@ class FrameFooter extends React.Component {
 						</li>
 					</ul>
 					<ul className="nav navbar-nav navbar-right">
-						<li v-once>
+						<li>
 							<p className={styles.footertext}>Copyright <span className="mdi mdi-copyright" aria-hidden="false"></span> 
 							{this.state.now.format('YYYY')} Southern Company <span className="mdi mdi-billiards-rack"></span></p>
 						</li>
