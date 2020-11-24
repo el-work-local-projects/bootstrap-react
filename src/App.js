@@ -38,7 +38,7 @@ function ViewSelector(props) {
 	let history = useHistory();
 	
 	function buildOptions(opts) {
-		return opts.map((opt) => (<option>{opt}</option>));
+		return opts.map((opt) => (<option key={opt}>{opt}</option>));
 	}
 	
 	function changeView(event) {
@@ -46,12 +46,12 @@ function ViewSelector(props) {
 		props.updateMode(event.target.value);
 	}
 	
-	return <form id="selector" class="form-inline mt-1 pb-1 border-bottom border-secondary">
-		<label class="mr-2">Feature:</label>				
-		<Form.Control as="select" value={props.mode} onChange={changeView}>
-			{buildOptions(props.modeOptions)}
-		</Form.Control>
-	</form>
+	return <form id="selector" className="form-inline mt-1 pb-1 border-bottom border-secondary">
+				<label className="mr-2">Feature:</label>				
+				<Form.Control as="select" value={props.mode} onChange={changeView}>
+					{buildOptions(props.modeOptions)}
+				</Form.Control>
+			</form>
 }
 
 class App extends React.Component {	
@@ -86,53 +86,57 @@ class App extends React.Component {
 					<div className="container-fluid app-content">
 						<ViewSelector mode={this.state.mode} modeOptions={this.state.modeOptions}
 									  updateMode={(mode) => this.setState({mode: mode})}/>
-						<Switch>
-							<Route path="/text">
-								<Alerts/>
-							</Route>
-							<Route path="/labels">
-								<Alerts/>
-							</Route>
-							<Route path="/buttons">
-								<Alerts/>
-							</Route>
-							<Route path="/tables">
-								<Alerts/>
-							</Route>
-							<Route path="/component-tables">
-								<Alerts/>
-							</Route>
-							<Route path="/forms">
-								<Alerts/>
-							</Route>
-							<Route path="/component-forms">
-								<Alerts/>
-							</Route>
-							<Route path="/navigation">
-								<Alerts/>
-							</Route>
-							<Route path="/alerts">
-								<Alerts/>
-							</Route>
-							<Route path="/time-selection">
-								<Alerts/>
-							</Route>
-							<Route path="/progress">
-								<Alerts/>
-							</Route>
-							<Route path="/list-groups">
-								<Alerts/>
-							</Route>
-							<Route path="/dialogs">
-								<Alerts/>
-							</Route>
-							<Route path="/containers">
-								<Alerts/>
-							</Route>
-							<Route exact path="/">
-								<Redirect to="/text"/>
-							</Route>
-						</Switch>
+						<div className="row" id="selection">
+							<div className="col">
+								<Switch>
+									<Route path="/text">
+										<Text/>
+									</Route>
+									<Route path="/labels">
+										<Labels/>
+									</Route>
+									<Route path="/buttons">
+										<Buttons/>
+									</Route>
+									<Route path="/tables">
+										<Tables/>
+									</Route>
+									<Route path="/component-tables">
+										<ComponentTables/>
+									</Route>
+									<Route path="/forms">
+										<Forms/>
+									</Route>
+									<Route path="/component-forms">
+										<ComponentForms/>
+									</Route>
+									<Route path="/navigation">
+										<Navigation/>
+									</Route>
+									<Route path="/alerts">
+										<Alerts/>
+									</Route>
+									<Route path="/time-selection">
+										<TimeSelection/>
+									</Route>
+									<Route path="/progress">
+										<Progress/>
+									</Route>
+									<Route path="/list-groups">
+										<ListGroups/>
+									</Route>
+									<Route path="/dialogs">
+										<Dialogs/>
+									</Route>
+									<Route path="/containers">
+										<Containers/>
+									</Route>
+									<Route exact path="/">
+										<Redirect to="/text"/>
+									</Route>
+								</Switch>
+							</div>
+						</div>
 					</div>
 					<FrameFooter></FrameFooter>
 				</div>
