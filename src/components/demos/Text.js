@@ -65,9 +65,6 @@ class Text extends React.Component {
 						<div className="col">
 							<Form.Control as="textarea" value={this.state.content} onChange={this.onTextChange}
 									placeholder="Type text here to see it in the various styles..." rows={3} maxRows={6} />
-						{/*
-							<b-form-textarea v-model="content" placeholder="Type text here to see it in the various styles..." rows=3 max-rows=6></b-form-textarea>
-						*/}
 						</div>
 					</div>
 					<div className="row">
